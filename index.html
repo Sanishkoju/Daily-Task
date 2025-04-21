@@ -67,11 +67,28 @@
     outline: none;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
         }
-li:hover{
+.top li:hover{
     background-color: #b3e5fc;
 }
         .move,.move2{
             cursor: pointer;
+        }
+        .progress{
+            background: linear-gradient(90deg, #42A5F5 6%, #64B5F6 50%);
+            
+        }
+        :is(.progress,.completed) h2{
+            color:#fff;
+        }
+        .progress li{
+            background-color: #FFf;
+        }
+        .completed{
+            background: linear-gradient(90deg,rgba(184, 33, 78, 1) 0%, rgba(161, 34, 142, 1) 50%);
+
+        }
+        .completed li{
+background-color: #fff;
         }
         @media(max-width:767px){
             .container{
@@ -119,6 +136,7 @@ li:hover{
       let pa = document.querySelector('.grid div');
       let btnn = document.querySelector('button')
       let arr =[];
+      let arr2 =[];
       
 
 
@@ -128,8 +146,9 @@ li:hover{
             let val= par.value.trim();
             if (val !== "") {
             let list = arr.push(val) ;
+            let backup = arr2.push(val) ;
             }
-            console.log(arr);
+            // console.log(arr);
             pa.innerHTML =  "<ul>" + arr.map((item ,index)=>`<li><div><div class="text" style="padding-bottom:5px;">${item === "" ? "Empty" : item}</div><div class="bttns"><span class="move" style="padding:7px; font-size:12px; color:#fff; background:#fbc02d; border-radius:8px">In Progress</span><span class="move2" style="padding:7px; color:#fff; font-size:12px; color red;background:#81C784; border-radius:8px;">Completed</span><span class="cross"><svg  height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#f98092" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"/></svg></span><div><div></li>`).join('') + "</ul>"  ;
             par.value="";
             if(val == ""){
@@ -145,8 +164,12 @@ li:hover{
             const li =cs.closest('li');
             const valueToRemove = li.childNodes[0].textContent.trim();
             const index = arr.indexOf(valueToRemove);
+  
             arr.splice(index,1);
-
+            const backupIndex = arr2.indexOf(valueToRemove);
+     
+        arr2.splice(backupIndex, 1);
+      
 
 
         }));
@@ -163,7 +186,7 @@ li:hover{
                 
                 const valueToRemove = li.childNodes[0].textContent.trim();
             const index = arr.indexOf(valueToRemove);
-            console.log("jpy",index);
+            // console.log("jpy",index);
             arr.splice(index,1);
             });
         });
@@ -185,21 +208,21 @@ li:hover{
       
         document.querySelector(".top input").addEventListener("input", function () {
   let searchValue = this.value.trim().toLowerCase(); 
-  console.log("searchValue", searchValue);
+//   console.log("searchValue", searchValue);
 
   let filtered = [];
   if(searchValue === ''){
     filtered = [];
   } 
   else{
-    filtered = arr.filter((item) => item.toLowerCase().includes(searchValue));
+    filtered = arr2.filter((item) => item.toLowerCase().includes(searchValue));
 
   }
-  console.log("filtered", filtered);
+//   console.log("filtered", filtered);
 
   document.querySelector(".top ul").innerHTML = 
     filtered.map(item => `<li>${item}</li>`).join('');
-    let searchInputs = document.querySelectorAll(".grid .text");
+    let searchInputs = document.querySelectorAll(".text");
 
 document.querySelectorAll(".top li").forEach((liItem) => {
   liItem.addEventListener("click", function () {
@@ -209,7 +232,7 @@ document.querySelectorAll(".top li").forEach((liItem) => {
 
     searchInputs.forEach((input) => {
       let inputVal = input.textContent.trim().toLowerCase();
-console.log("inputVal",inputVal);
+// console.log("inputVal",inputVal);
       if (clickedText === inputVal) {
         input.closest('li').style.background = "#b3e5fc";
         
