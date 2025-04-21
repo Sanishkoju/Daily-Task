@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display:grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap:30px;
+            padding:30px 20px;
+        }
+        .top{
+           padding:20px; 
+        }
+        .top input{
+            width:300px;
+        }
+        
+        .container > div,.top>div{
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            padding:30px;
+            border-radius: 8px;
+                }
+        .progress .move{
+            display: none;
+        }
+        .completed .move2{
+            display: none;
+        }
+        .bttns{
+            display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+        }
+        li{
+            list-style: none;
+            padding: 10px;
+    border: 1px solid #d0d0d0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 8px;
+    margin-block:5px;
+        }
+        ul{
+            padding:0;
+        }
+        button{
+            background: #01579B;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+        }
+        input{
+    width: -webkit-fill-available;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        }
+
+        .move,.move2{
+            cursor: pointer;
+        }
+        @media(max-width:767px){
+            .container{
+            grid-template-columns: repeat(1, 1fr);
+
+        }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="top">
+        <div>
+        <div class="flex" style="display: flex; align-items: center;justify-content: space-between;width: 100%;">
+            <h2>Search</h2>
+        <input type="text" placeholder="Search Task">
+        </div>  
+        <ul>
+            
+        </ul>
+        </div>
+    </div>
+<div class="container">
+    <div class="grid">
+        <h2>TODO</h2>
+        <article style="display: flex;gap:20px;">
+        <input type="text" placeholder="Enter Your Task "/>
+        <button>ADD</button>
+        </article>
+        <div></div>
+        
+        
+
+    </div>
+    <div class="progress">
+      <h2>IN PROGRESS</h2>
+    </div>
+    <div class="completed">
+      <h2>Completed</h2>
+    </div>
+</div>
+
+    <script>
+      let par = document.querySelector('.grid input');
+      let pa = document.querySelector('.grid div');
+      let btnn = document.querySelector('button')
+      let arr =[];
+      
+
+
+
+        btnn.addEventListener("click",function(){
+            console.log(par.value);
+            let val= par.value.trim();
+            let list = arr.push(val) ;
+            console.log(arr);
+            pa.innerHTML =  "<ul>" + arr.map((item ,index)=>`<li><div>${item === "" ? "Empty" : item}<div class="bttns"><span class="move" style="padding:7px; font-size:12px; color:#fff; background:#fbc02d; border-radius:8px">In Progress</span><span class="move2" style="padding:7px; color:#fff; font-size:12px; color red;background:#81C784; border-radius:8px;">Completed</span><span class="cross"><svg  height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#f98092" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"/></svg></span><div><div></li>`).join('') + "</ul>"  ;
+            par.value="";
+            if(val == ""){
+                par.placeholder = "Empty! Enter Your Task Please";
+
+
+            }else{
+                par.placeholder = "Enter Your Task ";
+            }
+            document.querySelectorAll(".cross").forEach((cs)=> cs.addEventListener("click",function(){
+          
+            cs.closest('li').remove();
+            const li =cs.closest('li');
+            const valueToRemove = li.childNodes[0].textContent.trim();
+            const index = arr.indexOf(valueToRemove);
+            arr.splice(index,1);
+
+
+
+        }));
+
+        
+        document.querySelectorAll('.move').forEach((mv)=>{mv.addEventListener("click",function(){
+            console.log(document.querySelector('.move'));
+                let toMove = mv.closest('li');
+                console.log("toMove",toMove);
+                document.querySelector('.progress').append(toMove);
+                const li =mv.closest('li');
+                
+                // mv.remove();
+                
+                const valueToRemove = li.childNodes[0].textContent.trim();
+            const index = arr.indexOf(valueToRemove);
+            console.log("jpy",index);
+            arr.splice(index,1);
+            });
+        });
+    
+        document.querySelectorAll('.move2').forEach((mc)=>{mc.addEventListener("click",function(){
+            console.log(document.querySelector('.move2'));
+                let toMove2 = mc.closest('li');
+                console.log("toMove2",toMove2);
+                document.querySelector('.completed').append(toMove2);
+                const li =mc.closest('li');
+                // mv.remove();
+                const valueToRemove = li.childNodes[0].textContent.trim();
+            const index = arr.indexOf(valueToRemove);
+            console.log("jpy",index);
+            arr.splice(index,1);
+            })
+
+        });
+      
+        document.querySelector(".top input").addEventListener("input", function () {
+  let searchValue = this.value.trim().toLowerCase(); 
+  console.log("searchValue", searchValue);
+
+  let filtered = [];
+  if(searchValue === ''){
+    filtered = [];
+  } 
+  else{
+    filtered = arr.filter((item) => item.toLowerCase().includes(searchValue));
+
+  }
+  console.log("filtered", filtered);
+
+  document.querySelector(".top ul").innerHTML = 
+    filtered.map(item => `<li>${item}</li>`).join('');
+
+});
+
+
+    
+    });
+
+    </script>
+</body>
+</html>
