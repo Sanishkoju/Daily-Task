@@ -133,107 +133,94 @@ background-color: #fff;
 
 <script>
     let par = document.querySelector('.grid input');
-let pa = document.querySelector('.grid div');
-let btnn = document.querySelector('button');
-
-// Initialize arrays
-let arr = JSON.parse(localStorage.getItem('arr')) || [];
-let arr2 = JSON.parse(localStorage.getItem('arr2')) || [];
-let progressArr = JSON.parse(localStorage.getItem('progressArr')) || [];
-let completedArr = JSON.parse(localStorage.getItem('completedArr')) || [];
-
-function saveAllToLocal() {
-  localStorage.setItem('arr', JSON.stringify(arr));
-  localStorage.setItem('arr2', JSON.stringify(arr2));
-  localStorage.setItem('progressArr', JSON.stringify(progressArr));
-  localStorage.setItem('completedArr', JSON.stringify(completedArr));
-}
-
-function createTaskItem(itemText) {
-  return `<li><div><div class="text" style="padding-bottom:5px; word-break: break-word;">${itemText}</div><div class="bttns">
-    <span class="move" style="padding:7px; font-size:12px; color:#fff; background:#fbc02d; border-radius:8px">In Progress</span>
-    <span class="move2" style="padding:7px; color:#fff; font-size:12px; background:#81C784; border-radius:8px;">Completed</span>
-    <span class="cross"><svg height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#f98092" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128h384v320c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg></span>
-  </div></div></li>`;
-}
-
-function renderAll() {
-  document.querySelector(".grid div").innerHTML = "<ul>" + arr.map(createTaskItem).join("") + "</ul>";
-  document.querySelector(".progress div").innerHTML = "<ul>" + progressArr.map(createTaskItem).join("") + "</ul>";
-  document.querySelector(".completed div").innerHTML = "<ul>" + completedArr.map(createTaskItem).join("") + "</ul>";
-  bindEvents(); // R
-}
-
-btnn.addEventListener("click", function () {
-  let val = par.value.trim();
-  if (val !== "") {
-    arr.push(val);
-    arr2.push(val);
-    saveAllToLocal();
-    renderAll();
-  }
-  par.value = "";
-});
-
-function bindEvents() {
-  document.querySelectorAll(".cross").forEach((cs) =>
-    cs.addEventListener("click", function () {
-      const li = cs.closest("li");
-      const val = li.querySelector(".text").textContent.trim();
-      arr = arr.filter(item => item !== val);
-      arr2 = arr2.filter(item => item !== val);
-      progressArr = progressArr.filter(item => item !== val);
-      completedArr = completedArr.filter(item => item !== val);
-      saveAllToLocal();
-      renderAll();
-    })
-  );
-
-  document.querySelectorAll(".move").forEach((mv) =>
-    mv.addEventListener("click", function () {
-      const li = mv.closest("li");
-      const val = li.querySelector(".text").textContent.trim();
-      arr = arr.filter(item => item !== val);
-      progressArr.push(val);
-      saveAllToLocal();
-      renderAll();
-    })
-  );
-
-  document.querySelectorAll(".move2").forEach((mc) =>
-    mc.addEventListener("click", function () {
-      const li = mc.closest("li");
-      const val = li.querySelector(".text").textContent.trim();
-      arr = arr.filter(item => item !== val);
-      progressArr = progressArr.filter(item => item !== val);
-      completedArr.push(val);
-      saveAllToLocal();
-      renderAll();
-    })
-  );
-
-  document.querySelector(".top input").addEventListener("input", function () {
-    const searchVal = this.value.trim().toLowerCase();
-    let filtered = arr2.filter((item) => item.toLowerCase().includes(searchVal));
-    document.querySelector(".top ul").innerHTML = filtered.map(item => `<li>${item}</li>`).join('');
-    document.querySelectorAll(".top li").forEach((liItem) => {
-      liItem.addEventListener("click", function () {
-        let text = liItem.textContent.trim().toLowerCase();
-        document.querySelectorAll(".text").forEach((el) => {
-          if (el.textContent.trim().toLowerCase() === text) {
-            el.closest("li").style.background = "#b3e5fc";
-          } else {
-            el.closest("li").style.background = "";
-          }
+    let pa = document.querySelector('.grid div');
+    let btnn = document.querySelector('button');
+  
+    let arr2 = JSON.parse(localStorage.getItem("arr2")) || [];
+    let arr = [...arr2];
+  
+    // ✅ Function to render and attach listeners
+    function renderTasks() {
+      pa.innerHTML = "<ul>" + arr.map((item) => `
+        <li>
+          <div>
+            <div class="text" style="padding-bottom:5px;">
+              ${item === "" ? "Empty" : item}
+            </div>
+            <div class="bttns">
+              <span class="move" style="padding:7px; font-size:12px; color:#fff; background:#fbc02d; border-radius:8px">In Progress</span>
+              <span class="move2" style="padding:7px; font-size:12px; color:#fff; background:#81C784; border-radius:8px;">Completed</span>
+              <span class="cross">
+                <svg  height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#f98092" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"/></svg>
+              </span>
+            </div>
+          </div>
+        </li>
+      `).join('') + "</ul>";
+  
+      // 🟨 Reattach listeners after rendering
+      document.querySelectorAll(".cross").forEach((cs) =>
+        cs.addEventListener("click", function () {
+          const li = cs.closest('li');
+          const valueToRemove = li.querySelector(".text").textContent.trim();
+          arr.splice(arr.indexOf(valueToRemove), 1);
+          arr2.splice(arr2.indexOf(valueToRemove), 1);
+          localStorage.setItem("arr2", JSON.stringify(arr2));
+          li.remove();
+        })
+      );
+  
+      document.querySelectorAll(".move").forEach((mv) =>
+        mv.addEventListener("click", function () {
+          let li = mv.closest("li");
+          document.querySelector(".progress").append(li);
+          arr.splice(arr.indexOf(li.querySelector(".text").textContent.trim()), 1);
+        })
+      );
+  
+      document.querySelectorAll(".move2").forEach((mc) =>
+        mc.addEventListener("click", function () {
+          let li = mc.closest("li");
+          document.querySelector(".completed").append(li);
+          arr.splice(arr.indexOf(li.querySelector(".text").textContent.trim()), 1);
+        })
+      );
+    }
+  
+    // ✅ Initial render on page load
+    renderTasks();
+  
+    // ✅ Add new task
+    btnn.addEventListener("click", function () {
+      let val = par.value.trim();
+      if (val !== "") {
+        arr.push(val);
+        arr2.push(val);
+        localStorage.setItem("arr2", JSON.stringify(arr2));
+        par.value = "";
+      }
+  
+      par.placeholder = val === "" ? "Empty! Enter Your Task Please" : "Enter Your Task";
+      renderTasks(); // 🔁 re-render updated tasks
+    });
+  
+    // ✅ Search
+    document.querySelector(".top input").addEventListener("input", function () {
+      let searchValue = this.value.trim().toLowerCase();
+      let filtered = searchValue === "" ? [] : arr2.filter((item) => item.toLowerCase().includes(searchValue));
+      document.querySelector(".top ul").innerHTML = filtered.map(item => `<li>${item}</li>`).join('');
+      let searchInputs = document.querySelectorAll(".text");
+  
+      document.querySelectorAll(".top li").forEach((liItem) => {
+        liItem.addEventListener("click", function () {
+          let clickedText = liItem.textContent.trim().toLowerCase();
+          searchInputs.forEach((input) => {
+            let inputVal = input.textContent.trim().toLowerCase();
+            input.closest("li").style.background = inputVal === clickedText ? "#b3e5fc" : "";
+          });
         });
       });
     });
-  });
-}
-
-// Initial render from localStorage
-renderAll();
-
   </script>
   
 </body>
