@@ -16,7 +16,7 @@
            padding:20px; 
         }
         .top input{
-            width:300px;
+            max-width:300px;
         }
         
         .container > div,.top>div{
@@ -107,7 +107,7 @@ background-color: #fff;
 <body>
     <div class="top">
         <div>
-        <div class="flex" style="display: flex;gap:20px; align-items: center;justify-content: space-between;width: 100%;">
+        <div class="flex" style="display: flex; flex-wrap:wrap; gap:20px; align-items: center;justify-content: space-between;width: 100%;">
             <h2>Search</h2>
         <input type="text" placeholder="Search Task">
         </div>  
@@ -131,9 +131,11 @@ background-color: #fff;
     </div>
     <div class="progress">
       <h2>IN PROGRESS</h2>
+      <ul></ul>
     </div>
     <div class="completed">
       <h2>COMPLETED</h2>
+      <ul></ul>
     </div>
 </div>
 
@@ -143,11 +145,19 @@ background-color: #fff;
     let btnn = document.querySelector('button');
     let arr = JSON.parse(localStorage.getItem("arr")) || [];
     let arr2 = JSON.parse(localStorage.getItem("arr2")) || [];
+    let taskList1 = document.querySelector(".progress ul");
+    let taskList2 = document.querySelector(".completed ul");
+   
+
 
     function updateStorage() {
-        localStorage.setItem("arr", JSON.stringify(arr2));
+        localStorage.setItem("arr", JSON.stringify(arr));
         localStorage.setItem("arr2", JSON.stringify(arr2));
+        localStorage.setItem("taskList1", taskList1.innerHTML);
+        localStorage.setItem("taskList2", taskList2.innerHTML);
+        console.log("asas",taskList1 );
     }
+ 
 
     function renderTasks() {
         pa.innerHTML = "<ul>" + arr.map((item, index) => {
@@ -189,7 +199,8 @@ background-color: #fff;
                     if (index !== -1) arr.splice(index, 1);
                     updateStorage();
                 }
-                document.querySelector('.progress').append(toMove);
+                taskList1.append(toMove);
+                updateStorage();
             });
         });
 
@@ -203,7 +214,8 @@ background-color: #fff;
                     if (index !== -1) arr.splice(index, 1);
                     updateStorage();
                 }
-                document.querySelector('.completed').append(toMove2);
+                taskList2.append(toMove2);
+                updateStorage();
             });
         });
     }
@@ -241,7 +253,12 @@ background-color: #fff;
     });
 
     // render tasks on page load
-    window.addEventListener("DOMContentLoaded", renderTasks);
+    window.addEventListener("DOMContentLoaded", function() {
+    // Load stored tasks from localStorage into the columns
+    taskList1.innerHTML = localStorage.getItem("taskList1") || "";
+    taskList2.innerHTML = localStorage.getItem("taskList2") || "";
+    renderTasks();
+});
 </script>
 
     
