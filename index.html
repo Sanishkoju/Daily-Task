@@ -220,7 +220,7 @@ document.querySelectorAll('.move2').forEach((mc) => {
         document.querySelector(".top input").addEventListener("input", function () {
             let searchValue = this.value.trim().toLowerCase();
             let filtered = searchValue === '' ? [] : arr2.filter(item => item.text.toLowerCase().includes(searchValue));
-            document.querySelector(".top i").innerHTML = `<span>Total result: ${filtered.length}</span>`;
+            document.querySelector(".top i").innerHTML = filtered.length !== 0 ? `<span>Total result: ${ filtered.length }</span>`: '';
             document.querySelector(".top ul").innerHTML =
                 filtered.map(item => `<li>${item.text}</li>`).join('');
     
