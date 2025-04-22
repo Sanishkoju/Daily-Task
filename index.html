@@ -16,7 +16,7 @@
            padding:20px; 
         }
         .top input{
-            max-width:300px;
+            width:300px;
         }
         
         .container > div,.top>div{
@@ -90,6 +90,11 @@
         .completed li{
 background-color: #fff;
         }
+        .dateContainer{
+            font-size: 12px;
+    justify-self: flex-start;
+    color: #565353;
+        }
         @media(max-width:767px){
             .container{
             grid-template-columns: repeat(1, 1fr);
@@ -132,95 +137,134 @@ background-color: #fff;
 </div>
 
 <script>
+    
     let par = document.querySelector('.grid input');
-    let pa = document.querySelector('.grid div');
-    let btnn = document.querySelector('button');
+      let pa = document.querySelector('.grid div');
+      let btnn = document.querySelector('button');
+      let arr =[];
+      let arr2 =[];
+      
+
+
+
+        btnn.addEventListener("click",function(){
+            console.log(par.value);
+            let val= par.value.trim();
+            if (val !== "") {
+                let list = arr.push({ text: val, time: new Date().toLocaleTimeString() });
+let backup = arr2.push({ text: val, time: new Date().toLocaleTimeString() });
+
+            }
+            // console.log(arr);
+            pa.innerHTML =  "<ul>" + arr.map((item ,index)=>{
+     return`<li><div><div class="text" style="padding-bottom:5px;">${item.text === "" ? "Empty" : item.text}</div><div class="bttns"><span class="dateContainer">${item.time}</span><span class="move" style="padding:7px; font-size:12px; color:#fff; background:#fbc02d; border-radius:8px">In Progress</span><span class="move2" style="padding:7px; color:#fff; font-size:12px; color red;background:#81C784; border-radius:8px;">Completed</span><span class="cross"><svg  height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#f98092" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"/></svg></span><div><div></li>`}).join('') + "</ul>"  ;
+            par.value="";
+            if(val == ""){
+                par.placeholder = "Empty! Enter Your Task Please";
+
+
+            }else{
+                par.placeholder = "Enter Your Task ";
+            }
+            
+
+
+
+        
+            document.querySelectorAll(".cross").forEach((cs)=> cs.addEventListener("click",function(){
+          
+            cs.closest('li').remove();
+            const li =cs.closest('li');
+            const valueToRemove = li.childNodes[0].textContent.trim();
+            const index = arr.indexOf(valueToRemove);
   
-    let arr2 = JSON.parse(localStorage.getItem("arr2")) || [];
-    let arr = [...arr2];
-  
-    // ✅ Function to render and attach listeners
-    function renderTasks() {
-      pa.innerHTML = "<ul>" + arr.map((item) => `
-        <li>
-          <div>
-            <div class="text" style="padding-bottom:5px;">
-              ${item === "" ? "Empty" : item}
-            </div>
-            <div class="bttns">
-              <span class="move" style="padding:7px; font-size:12px; color:#fff; background:#fbc02d; border-radius:8px">In Progress</span>
-              <span class="move2" style="padding:7px; font-size:12px; color:#fff; background:#81C784; border-radius:8px;">Completed</span>
-              <span class="cross">
-                <svg  height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#f98092" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"/></svg>
-              </span>
-            </div>
-          </div>
-        </li>
-      `).join('') + "</ul>";
-  
-      // 🟨 Reattach listeners after rendering
-      document.querySelectorAll(".cross").forEach((cs) =>
-        cs.addEventListener("click", function () {
-          const li = cs.closest('li');
-          const valueToRemove = li.querySelector(".text").textContent.trim();
-          arr.splice(arr.indexOf(valueToRemove), 1);
-          arr2.splice(arr2.indexOf(valueToRemove), 1);
-          localStorage.setItem("arr2", JSON.stringify(arr2));
-          li.remove();
-        })
-      );
-  
-      document.querySelectorAll(".move").forEach((mv) =>
-        mv.addEventListener("click", function () {
-          let li = mv.closest("li");
-          document.querySelector(".progress").append(li);
-          arr.splice(arr.indexOf(li.querySelector(".text").textContent.trim()), 1);
-        })
-      );
-  
-      document.querySelectorAll(".move2").forEach((mc) =>
-        mc.addEventListener("click", function () {
-          let li = mc.closest("li");
-          document.querySelector(".completed").append(li);
-          arr.splice(arr.indexOf(li.querySelector(".text").textContent.trim()), 1);
-        })
-      );
-    }
-  
-    // ✅ Initial render on page load
-    renderTasks();
-  
-    // ✅ Add new task
-    btnn.addEventListener("click", function () {
-      let val = par.value.trim();
-      if (val !== "") {
-        arr.push(val);
-        arr2.push(val);
-        localStorage.setItem("arr2", JSON.stringify(arr2));
-        par.value = "";
-      }
-  
-      par.placeholder = val === "" ? "Empty! Enter Your Task Please" : "Enter Your Task";
-      renderTasks(); // 🔁 re-render updated tasks
-    });
-  
-    // ✅ Search
-    document.querySelector(".top input").addEventListener("input", function () {
-      let searchValue = this.value.trim().toLowerCase();
-      let filtered = searchValue === "" ? [] : arr2.filter((item) => item.toLowerCase().includes(searchValue));
-      document.querySelector(".top ul").innerHTML = filtered.map(item => `<li>${item}</li>`).join('');
-      let searchInputs = document.querySelectorAll(".text");
-  
-      document.querySelectorAll(".top li").forEach((liItem) => {
-        liItem.addEventListener("click", function () {
-          let clickedText = liItem.textContent.trim().toLowerCase();
-          searchInputs.forEach((input) => {
-            let inputVal = input.textContent.trim().toLowerCase();
-            input.closest("li").style.background = inputVal === clickedText ? "#b3e5fc" : "";
-          });
+            arr.splice(index,1);
+            const backupIndex = arr2.indexOf(valueToRemove);
+     
+        arr2.splice(backupIndex, 1);
+      
+ 
+
+
+        }));
+
+        
+        document.querySelectorAll('.move').forEach((mv)=>{mv.addEventListener("click",function(){
+            console.log(document.querySelector('.move'));
+                let toMove = mv.closest('li');
+                console.log("toMove",toMove);
+                document.querySelector('.progress').append(toMove);
+                const li =mv.closest('li');
+                
+                // mv.remove();
+                
+                const valueToRemove = li.childNodes[0].textContent.trim();
+            const index = arr.indexOf(valueToRemove);
+            // console.log("jpy",index);
+            arr.splice(index,1);
+            });
         });
-      });
+    
+        document.querySelectorAll('.move2').forEach((mc)=>{mc.addEventListener("click",function(){
+            console.log(document.querySelector('.move2'));
+                let toMove2 = mc.closest('li');
+                console.log("toMove2",toMove2);
+                document.querySelector('.completed').append(toMove2);
+                const li =mc.closest('li');
+                // mv.remove();
+                const valueToRemove = li.childNodes[0].textContent.trim();
+            const index = arr.indexOf(valueToRemove);
+            console.log("jpy",index);
+            arr.splice(index,1);
+            })
+
+        });
+      
+        document.querySelector(".top input").addEventListener("input", function () {
+  let searchValue = this.value.trim().toLowerCase(); 
+//   console.log("searchValue", searchValue);
+
+  let filtered = [];
+  if(searchValue === ''){
+    filtered = [];
+  } 
+  else{
+    filtered = arr2.filter((item) => item.text.toLowerCase().includes(searchValue));
+
+  }
+//   console.log("filtered", filtered);
+
+  document.querySelector(".top ul").innerHTML = 
+    filtered.map(item => `<li>${item.text}</li>`).join('');
+    let searchInputs = document.querySelectorAll(".text");
+
+document.querySelectorAll(".top li").forEach((liItem) => {
+  liItem.addEventListener("click", function () {
+
+    let clickedText = liItem.textContent.trim().toLowerCase();
+    
+
+    searchInputs.forEach((input) => {
+      let inputVal = input.textContent.trim().toLowerCase();
+// console.log("inputVal",inputVal);
+      if (clickedText === inputVal) {
+        input.closest('li').style.background = "#b3e5fc";
+        
+      } else {
+        input.closest('li').style.background = "";
+        
+      }
     });
+  });
+});
+
+});
+});
+
+
+
+
+
   </script>
   
 </body>
