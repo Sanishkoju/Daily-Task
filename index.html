@@ -16,7 +16,7 @@
            padding:20px; 
         }
         .top input{
-            max-width:400px;
+            width:300px;
         }
         
         .container > div,.top>div{
@@ -107,10 +107,11 @@ background-color: #fff;
 <body>
     <div class="top">
         <div>
-        <div class="flex" style="display: flex;flex-wrap:wrap;gap:20px; align-items: center;justify-content: space-between;width: 100%;">
+        <div class="flex" style="display: flex;gap:20px; align-items: center;justify-content: space-between;width: 100%;">
             <h2>Search</h2>
         <input type="text" placeholder="Search Task">
         </div>  
+        <i></i>
         <ul>
             
         </ul>
@@ -144,7 +145,7 @@ background-color: #fff;
     let arr2 = [];
     
     btnn.addEventListener("click", function () {
-        console.log(par.value);
+        // console.log(par.value);
         let val = par.value.trim();
         if (val !== "") {
             arr.push({ text: val, time: new Date().toLocaleTimeString() });
@@ -219,7 +220,7 @@ document.querySelectorAll('.move2').forEach((mc) => {
         document.querySelector(".top input").addEventListener("input", function () {
             let searchValue = this.value.trim().toLowerCase();
             let filtered = searchValue === '' ? [] : arr2.filter(item => item.text.toLowerCase().includes(searchValue));
-    
+            document.querySelector(".top i").innerHTML = `<span>Total result: ${filtered.length}</span>`;
             document.querySelector(".top ul").innerHTML =
                 filtered.map(item => `<li>${item.text}</li>`).join('');
     
