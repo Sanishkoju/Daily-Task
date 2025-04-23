@@ -199,10 +199,10 @@ background-color: #fff;
         document.querySelectorAll(".cross").forEach((cs) => cs.addEventListener("click", function () {
             const li = cs.closest('li');
             li.remove();
-            const valueToRemove = li.querySelector(".text").textContent.trim();
-            const index = arr.findIndex(item => item.text === valueToRemove);
+            const valueToRemove = li.querySelector(".text").innerHTML.trim();
+            const index = arr.findIndex(item => item.text.trim() === valueToRemove);
             if (index !== -1) arr.splice(index, 1);
-            const backupIndex = arr2.findIndex(item => item.text === valueToRemove);
+            const backupIndex = arr2.findIndex(item => item.text.trim() === valueToRemove);
             if (backupIndex !== -1) arr2.splice(backupIndex, 1);
             updateStorage();
         }));
@@ -212,8 +212,8 @@ background-color: #fff;
                 const toMove = mv.closest('li');
                 const parent = toMove.parentElement;
                 if (parent.closest('.grid')) {
-                    const valueToRemove = toMove.querySelector(".text").textContent.trim();
-                    const index = arr.findIndex(item => item.text === valueToRemove);
+                    const valueToRemove = toMove.querySelector(".text").innerHTML.trim();
+                    const index = arr.findIndex(item => item.text.trim() === valueToRemove);
                     if (index !== -1) arr.splice(index, 1);
                     updateStorage();
                 }
@@ -227,8 +227,8 @@ background-color: #fff;
                 const toMove2 = mc.closest('li');
                 const parent = toMove2.parentElement;
                 if (parent.closest('.grid')) {
-                    const valueToRemove = toMove2.querySelector(".text").textContent.trim();
-                    const index = arr.findIndex(item => item.text === valueToRemove);
+                    const valueToRemove = toMove2.querySelector(".text").innerHTML.trim();
+                    const index = arr.findIndex(item => item.text.trim() === valueToRemove);
                     if (index !== -1) arr.splice(index, 1);
                     updateStorage();
                 }
