@@ -279,10 +279,11 @@ background-color: #fff;
     document.querySelector('.clear-btn').addEventListener("click",function(){
         localStorage.clear();
         alert('Task board data cleared!');
-    });
-                arr=[];
+        arr=[];
         arr2=[];
         document.querySelectorAll('li').forEach((remove)=>remove.remove());
+    });
+
 });
 </script>
 
