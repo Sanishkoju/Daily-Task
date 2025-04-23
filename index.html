@@ -111,7 +111,7 @@ background-color: #fff;
             <h2>Search</h2>
         <input type="text" placeholder="Search Task">
         </div>  
-        <i></i>
+        <i style="margin-top:5px;"></i>
         <ul>
             
         </ul>
@@ -223,8 +223,8 @@ background-color: #fff;
     btnn.addEventListener("click", function () {
         let val = par.value.trim();
         if (val !== "") {
-            arr.push({ text: val, time: new Date().toLocaleTimeString() });
-            arr2.push({ text: val, time: new Date().toLocaleTimeString() });
+            arr.push({ text: val, time: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}` });
+            arr2.push({ text: val, time: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}` });
             updateStorage();
         }
         renderTasks();
