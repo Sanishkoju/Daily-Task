@@ -139,6 +139,10 @@ background-color: #fff;
       <ul></ul>
     </div>
 </div>
+    <div class="bottom" style="padding:30px 20px">
+    <button style="margin-left: auto; display:block" class="clear-btn">Clear History</button>
+
+</div>
 
 <script>
     let par = document.querySelector('.grid input');
@@ -259,6 +263,10 @@ background-color: #fff;
     taskList1.innerHTML = localStorage.getItem("taskList1") || "";
     taskList2.innerHTML = localStorage.getItem("taskList2") || "";
     renderTasks();
+    document.querySelector('.clear-btn').addEventListener("click",function(){
+        localStorage.clear();
+        alert('Only previous data removed ! Task board data cleared!');
+    });
 });
 </script>
 
