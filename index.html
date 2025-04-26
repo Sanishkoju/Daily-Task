@@ -152,7 +152,7 @@ background-color: #fff;
 <div class="container">
     <div class="grid">
         <h2>TODO</h2>
-        <article style="display: flex;gap:20px;">
+        <article style="display: flex;">
          <span class="input-group">
         <span class="inputwrap">
         <input type="text" placeholder="Enter Your Task "/>
@@ -281,7 +281,7 @@ background-color: #fff;
     }
         Link.addEventListener("click",function(){
             if(par.value == ""){
-                par.placeholder = "Please enter task first to add link";
+                par.placeholder = "Please Enter Task First To Add Link";
                 alert("Please enter task first to add link");
                 
             }
@@ -312,6 +312,7 @@ background-color: #fff;
         renderTasks();
         par.value = "";
         par.placeholder = val === "" ? "Empty! Enter Your Task Please" : "Enter Your Task ";
+        alert("Empty! Enter Your Task Please");
                 changeType.type="hidden";
         if(linkType){
         linkType.value = "";
