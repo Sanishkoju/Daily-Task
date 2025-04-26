@@ -75,12 +75,17 @@
         }
         input{
     width: -webkit-fill-available;
-    padding: 10px;
-    border-radius: 8px;
+
     border: none;
             font-size:16px;
     outline: none;
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    padding-block:5px;
+        }
+        .input-group,.top input{
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            padding: 10px;
+            border-radius: 8px;
+
         }
 .top li:hover{
     background-color: #b3e5fc;
@@ -142,8 +147,17 @@ background-color: #fff;
     <div class="grid">
         <h2>TODO</h2>
         <article style="display: flex;gap:20px;">
+         <span class="input-group">
+        <span class="inputwrap">
         <input type="text" placeholder="Enter Your Task "/>
-        <button>ADD</button>
+        <input class="changetype" type="hidden" />
+    </span>
+        <span class="input-btn">
+            <span class="icons link"><svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg></span>
+        </span>
+        </span>          
+        <button style="height: fit-content;
+">ADD</button>
         </article>
         <div></div>
         
@@ -168,6 +182,7 @@ background-color: #fff;
     let par = document.querySelector('.grid input');
     let pa = document.querySelector('.grid div');
     let btnn = document.querySelector('button');
+    let Link =document.querySelector('.link');
     let arr = JSON.parse(localStorage.getItem("arr")) || [];
     let arr2 = JSON.parse(localStorage.getItem("arr2")) || [];
     let taskList1 = document.querySelector(".progress ul");
@@ -189,6 +204,12 @@ background-color: #fff;
             return `<li>
                 <div>
                     <div class="text" style="padding-bottom:5px;">${item.text === "" ? "Empty" : item.text}</div>
+                    ${item.link ? `
+                    <div class="linkDiv">
+                        <a href="${item.link}" target="_blank">${item.link}</a>
+                    </div>` : ""}
+                    
+                    <div class="bttns" style="padding-bottom:8px;>
                     <div class="bttns">
                         <span class="dateContainer">${item.time}</span>
                         <span class="move" style="padding:7px; font-size:12px; color:#fff; background:#fbc02d; border-radius:8px;white-space: nowrap;">In Progress</span>
@@ -203,15 +224,23 @@ background-color: #fff;
             </li>`;
         }).join('') + "</ul>";
 
-        document.querySelectorAll(".cross").forEach((cs) => cs.addEventListener("click", function () {
+        document.querySelectorAll(".cross").forEach((cs , index) => cs.addEventListener("click", function () {
             const li = cs.closest('li');
-            li.remove();
+            
             const valueToRemove = li.querySelector(".text").innerHTML.trim();
             const index = arr.findIndex(item => item.text.trim() === valueToRemove);
-            if (index !== -1) arr.splice(index, 1);
+            if (index !== -1) {arr.splice(index, 1);
+                
+                li.remove();
+                updateStorage();
+            }
             const backupIndex = arr2.findIndex(item => item.text.trim() === valueToRemove);
-            if (backupIndex !== -1) arr2.splice(backupIndex, 1);
-            updateStorage();
+            if (backupIndex !== -1) {arr2.splice(backupIndex, 1);
+                       
+                li.remove();
+                updateStorage();
+            }
+            
         }));
 
         document.querySelectorAll('.move').forEach((mv) => {
@@ -244,17 +273,35 @@ background-color: #fff;
             });
         });
     }
+        Link.addEventListener("click",function(){
+        changeType.type="url";
+        changeType.setAttribute("placeholder","Enter URL");
+    });
 
     btnn.addEventListener("click", function () {
+       let linkType = document.querySelector('input[type="url"]');
+
         let val = par.value.trim();
+
+        if (linkType) {
+        linkval = linkType.value.trim();
+               console.log("linkval",linkval);
+            } 
+            else{
+                linkval = "";
+            }
         if (val !== "") {
-            arr.push({ text: val, time: `(${new Date().toLocaleDateString()}) ${new Date().toLocaleTimeString()}` });
-            arr2.push({ text: val, time: `(${new Date().toLocaleDateString()}) ${new Date().toLocaleTimeString()}` });
+
+             arr.push({ text: val, time: `(${new Date().toLocaleDateString()}) ${new Date().toLocaleTimeString()}`,link:linkval });
+            arr2.push({ text: val, time: `(${new Date().toLocaleDateString()}) ${new Date().toLocaleTimeString()}`,link:linkval });
             updateStorage();
         }
         renderTasks();
         par.value = "";
         par.placeholder = val === "" ? "Empty! Enter Your Task Please" : "Enter Your Task ";
+                changeType.type="hidden";
+        if(linkType){
+        linkType.value = "";
     });
 
     document.querySelector(".top input").addEventListener("input", function () {
