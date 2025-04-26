@@ -334,6 +334,8 @@ background-color: #fff;
     taskList1.innerHTML = localStorage.getItem("taskList1") || "";
     taskList2.innerHTML = localStorage.getItem("taskList2") || "";
     renderTasks();
+          console.log('arr',arr);
+    console.log('arr2',arr2);
     document.querySelector('.clear-btn').addEventListener("click",function(){
         localStorage.clear();
         alert('Task board data cleared!');
