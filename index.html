@@ -27,11 +27,17 @@
             max-width:300px;
         }
         
-        .container > div,.top>div{
+        .container > div,.top>div,.pie{
             box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-            padding:30px;
+            padding:20px;
             border-radius: 8px;
             height:fit-content;
+                }
+                .pie{
+                    margin:30px 20px;
+                    display:block;
+                    margin: auto;
+                    max-width:400px;
                 }
         .progress .move{
             display: none;
@@ -182,7 +188,10 @@ background-color: #fff;
     <button style="margin-left: auto; display:block" class="clear-btn">CLEAR ALL</button>
 
 </div>
-
+<div class="pie">
+        <canvas id="donutChart" class="fixed-chart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 <script>
     let par = document.querySelector('.grid input');
     let pa = document.querySelector('.grid div');
@@ -201,7 +210,7 @@ background-color: #fff;
         localStorage.setItem("arr2", JSON.stringify(arr2));
         localStorage.setItem("taskList1", taskList1.innerHTML);
         localStorage.setItem("taskList2", taskList2.innerHTML);
-        console.log("asas",taskList1 );
+        // console.log("asas",taskList1 );
     }
  
 
@@ -239,12 +248,14 @@ background-color: #fff;
                 
                 li.remove();
                 updateStorage();
+                renderChart();
             }
             const backupIndex = arr2.findIndex(item => item.text.trim() === valueToRemove);
             if (backupIndex !== -1) {arr2.splice(backupIndex, 1);
                        
                 li.remove();
                 updateStorage();
+                renderChart();
             }
             
         }));
@@ -258,9 +269,11 @@ background-color: #fff;
                     const index = arr.findIndex(item => item.text.trim() === valueToRemove);
                     if (index !== -1) arr.splice(index, 1);
                     updateStorage();
+                        renderChart();
                 }
                 taskList1.append(toMove);
                 updateStorage();
+                    renderChart();
             });
         });
 
@@ -273,9 +286,11 @@ background-color: #fff;
                     const index = arr.findIndex(item => item.text.trim() === valueToRemove);
                     if (index !== -1) arr.splice(index, 1);
                     updateStorage();
+                        renderChart();
                 }
                 taskList2.append(toMove2);
                 updateStorage();
+                    renderChart();
             });
         });
     }
@@ -308,6 +323,7 @@ background-color: #fff;
              arr.push({ text: val, time: `(${new Date().toLocaleDateString()}) ${new Date().toLocaleTimeString()}`,link:linkval });
             arr2.push({ text: val, time: `(${new Date().toLocaleDateString()}) ${new Date().toLocaleTimeString()}`,link:linkval });
             updateStorage();
+                renderChart();
         }
         renderTasks();
         par.value = "";
@@ -345,16 +361,8 @@ background-color: #fff;
     taskList1.innerHTML = localStorage.getItem("taskList1") || "";
     taskList2.innerHTML = localStorage.getItem("taskList2") || "";
     renderTasks();
-          console.log('arr',arr);
-    console.log('arr2',arr2);
-          let data1 = document.querySelectorAll('.item1 li').length;
-   let data2 = document.querySelectorAll('.item2 li').length;
-   let data3 = arr.length;
-   let data4 = arr2.length;
-        console.log("progress",data1);
-        console.log("completed",data2);
-        console.log("arr",data3);
-        console.log("arr2",data4);
+    renderChart();
+
     document.querySelector('.clear-btn').addEventListener("click",function(){
         localStorage.clear();
         alert('Task board data cleared!');
@@ -364,6 +372,93 @@ background-color: #fff;
     });
 
 });
+      
+   const inquiryTypes = ["To Do", "In Progress", "Completed"];
+  const colors = ['#fbc02d', '#42A5EF', 'rgb(184 33 78)'];
+
+
+
+  const ctx = document.getElementById('donutChart').getContext('2d');
+  let donutChart;
+
+  function renderChart() {
+          let data1 = document.querySelectorAll('.item1 li').length;
+   let data2 = document.querySelectorAll('.item2 li').length;
+   let data3 = arr.length;
+   let data4 = arr2.length;
+        console.log("progress",data1);
+        console.log("completed",data2);
+        console.log("arr",data3);
+        console.log("arr2",data4);
+  
+
+    const dataValues = [data3,data1,data2];
+    const total = dataValues.reduce((a, b) => a + b, 0);
+
+    if (donutChart) donutChart.destroy();
+
+    donutChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: inquiryTypes,
+        datasets: [{
+          data: dataValues,
+          backgroundColor: colors,
+          borderColor: "#fff",
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        animation: {
+          animateScale: true,
+          duration: 1200
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              font: { size: 14 },
+              usePointStyle: true
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const val = context.raw;
+                const percent = ((val / total) * 100).toFixed(1);
+                return `${context.label}: ${val} inquiries (${percent}%)`;
+              }
+            }
+          },
+          datalabels: {
+            color: '#fff',
+            font: {
+              weight: 'bold',
+              size: 14
+            },
+            formatter: (value, context) => {
+              const percent = ((value / total) * 100).toFixed(1);
+              return `${percent}%`;
+            }
+          }
+        },
+        onClick: (e, elements) => {
+          if (elements.length > 0) {
+            const idx = elements[0].index;
+            const type = inquiryTypes[idx];
+            const count = dataValues[idx];
+            const percent = ((count / total) * 100).toFixed(1);
+            document.getElementById('detailsText').textContent =
+              `${type} — ${count} inquiries (${percent}%)`;
+            document.getElementById('detailsBox').style.display = 'block';
+          }
+        }
+      },
+    //   plugins: [ChartDataLabels]
+    });
+  }
+
 </script>
 
     
