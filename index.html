@@ -148,8 +148,14 @@ background-color: #fff;
     grid-template-columns: repeat(2, 1fr);
 }
 h5,p{
-    margin-block:25px;
+    margin-block:10px;
 }
+        .card-text{
+            font-size:4rem;
+        }
+        h5{
+            font-size:1rem;
+        }
                 @media(max-width:1024px){
             .container{
             grid-template-columns: repeat(2, 1fr);
@@ -234,32 +240,36 @@ h5,p{
             <div class="col">
                 <div class="card card-stat h-100" style="border: 1px solid #ddd; border-radius: 8px; background-color: #ffffff;">
                     <div  style="padding: 15px;">
+                        
+                        <p id="dataTodo" class="card-text display-6 m-0" style=" font-weight: 500; color: #42A5EF"></p>
                         <h5 class="card-title" style="font-size: 1.125rem; font-weight: bold;">TODO</h5>
-                        <p id="dataTodo" class="card-text display-6 m-0" style="font-size: 2rem; font-weight: 500; color: #42A5EF"></p>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card card-stat h-100" style="border: 1px solid #ddd; border-radius: 8px; background-color: #ffffff;">
                     <div  style="padding: 15px;">
+                        
+                        <p id="dataProgress" class="card-text display-6 m-0" style=" font-weight: 500; color: #fbc02d;"></p>
                         <h5 class="card-title" style="font-size: 1.125rem; font-weight: bold;">IN PROGRESS</h5>
-                        <p id="dataProgress" class="card-text display-6 m-0" style="font-size: 2rem; font-weight: 500; color: #fbc02d;"><span class="fs-small" style="font-size: 1rem;">mi</span></p>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card card-stat h-100" style="border: 1px solid #ddd; border-radius: 8px; background-color: #ffffff;">
                     <div  style="padding: 15px;">
+                         <p id="dataCompleted"class="card-text display-6 m-0" style=" font-weight: 500; color: #81C784;"></p>
                         <h5 class="card-title" style="font-size: 1.125rem; font-weight: bold;">COMPLETED</h5>
-                        <p id="dataCompleted"class="card-text display-6 m-0" style="font-size: 2rem; font-weight: 500; color: #81C784;"></p>
+                       
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card card-stat h-100" style="border: 1px solid #ddd; border-radius: 8px; background-color: #ffffff;">
                     <div  style="padding: 15px;">
+                        <p id="dataBackup"class="card-text display-6 m-0" style="font-weight: 500; color: #ff0741;">
                         <h5 class="card-title" style="font-size: 1.125rem; font-weight: bold;">BACKUP</h5>
-                        <p id="dataBackup"class="card-text display-6 m-0" style="font-size: 2rem; font-weight: 500; color: #ff0741;"><span class="fs-small" style="font-size: 1rem;">hr</span></p>
+                        
                     </div>
                 </div>
             </div>
