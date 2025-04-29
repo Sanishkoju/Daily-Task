@@ -222,7 +222,7 @@ h5,p{
         <figure style="margin:0px">
                 <img src="https://picsum.photos/300/200" id="preview" style="width:80px;height:80px;border-radius: 50%;border:2px solid #4f6bc7; object-fit: cover;"/>
                 <input type="file" id="imageInput" accept="image/*" style="display:none">
-                <label for="imageInput" style="background:rgb(216, 216, 216);display:grid;place-content:center;width:30px;height:30px;border-radius: 50%;margin-top: -22px;position: relative;z-index: 2;"><svg width="15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path  d="M149.1 64.8L138.7 96 64 96C28.7 96 0 124.7 0 160L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64l-74.7 0L362.9 64.8C356.4 45.2 338.1 32 317.4 32L194.6 32c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg></label>
+                <label for="imageInput" style="background:rgb(216, 216, 216);display:grid;place-content:center;width:30px;height:30px;border-radius: 50%;margin-top: -22px;position: relative;z-index: 2;cursor:pointer;"><svg width="15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path  d="M149.1 64.8L138.7 96 64 96C28.7 96 0 124.7 0 160L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64l-74.7 0L362.9 64.8C356.4 45.2 338.1 32 317.4 32L194.6 32c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg></label>
         </figure>
         <input class="input" style="margin-bottom:10px;" type="text" placeholder="Search Tasks">
         </div>  
@@ -490,11 +490,11 @@ h5,p{
     renderChart();
 
     document.querySelector('.clear-btn').addEventListener("click",function(){
-        localStorage.clear();
-        // localStorage.removeItem("taskList1");
-        // localStorage.removeItem("taskList2");
-        // localStorage.removeItem("arr");
-        // localStorage.removeItem("arr2");
+        // localStorage.clear();
+        localStorage.removeItem("taskList1");
+        localStorage.removeItem("taskList2");
+        localStorage.removeItem("arr");
+        localStorage.removeItem("arr2");
         
         alert('Task board data cleared!');
         arr=[];
