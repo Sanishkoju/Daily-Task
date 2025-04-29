@@ -490,7 +490,12 @@ h5,p{
     renderChart();
 
     document.querySelector('.clear-btn').addEventListener("click",function(){
-        localStorage.clear();
+        // localStorage.clear();
+        localStorage.removeItem("taskList1");
+        localStorage.removeItem("taskList2");
+        localStorage.removeItem("arr");
+        localStorage.removeItem("arr2");
+        
         alert('Task board data cleared!');
         arr=[];
         arr2=[];
