@@ -361,15 +361,15 @@ h5,p{
         document.querySelectorAll(".cross").forEach((cs , index) => cs.addEventListener("click", function () {
             const li = cs.closest('li');
             
-            const valueToRemove = li.querySelector(".text").innerHTML.trim();
-            const index = arr.findIndex(item => item.text.trim() === valueToRemove);
+            const valueToRemove = li.querySelector(".dateContainer").innerHTML.trim();
+            const index = arr.findIndex(item => item.time.trim() === valueToRemove);
             if (index !== -1) {arr.splice(index, 1);
                 
                 li.remove();
                 updateStorage();
                 renderChart();
             }
-            const backupIndex = arr2.findIndex(item => item.text.trim() === valueToRemove);
+            const backupIndex = arr2.findIndex(item => item.time.trim() === valueToRemove);
             if (backupIndex !== -1) {arr2.splice(backupIndex, 1);
                        
                 li.remove();
@@ -384,8 +384,8 @@ h5,p{
                 const toMove = mv.closest('li');
                 const parent = toMove.parentElement;
                 if (parent.closest('.grid')) {
-                    const valueToRemove = toMove.querySelector(".text").innerHTML.trim();
-                    const index = arr.findIndex(item => item.text.trim() === valueToRemove);
+                    const valueToRemove = toMove.querySelector(".dateContainer").innerHTML.trim();
+                    const index = arr.findIndex(item => item.time.trim() === valueToRemove);
                     if (index !== -1) arr.splice(index, 1);
                     updateStorage();
                         renderChart();
@@ -401,8 +401,8 @@ h5,p{
                 const toMove2 = mc.closest('li');
                 const parent = toMove2.parentElement;
                 if (parent.closest('.grid')) {
-                    const valueToRemove = toMove2.querySelector(".text").innerHTML.trim();
-                    const index = arr.findIndex(item => item.text.trim() === valueToRemove);
+                    const valueToRemove = toMove2.querySelector(".dateContainer").innerHTML.trim();
+                    const index = arr.findIndex(item => item.time.trim() === valueToRemove);
                     if (index !== -1) arr.splice(index, 1);
                     updateStorage();
                         renderChart();
