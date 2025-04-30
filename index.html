@@ -339,7 +339,11 @@ h5,p{
         // console.log("asas",taskList1 );
     }
  
-
+            const savedSrc = localStorage.getItem("inputSrc");
+  if (savedSrc) {
+    preview.src = savedSrc;
+    preview.style.display = 'block';
+  }
     function renderTasks() {
         pa.innerHTML = "<ul>" + arr.map((item, index) => {
             return `<li>
@@ -502,11 +506,7 @@ h5,p{
         document.querySelectorAll('li').forEach((remove)=>remove.remove());
         renderChart();
     });
-            const savedSrc = localStorage.getItem("inputSrc");
-  if (savedSrc) {
-    preview.src = savedSrc;
-    preview.style.display = 'block';
-  }
+
 
   input.addEventListener('change', function () {
     const file = this.files[0];
