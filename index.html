@@ -613,24 +613,24 @@ h5,p{
     document.querySelector('#dataCompleted').textContent = data2;
     document.querySelector('#dataBackup').textContent = data4;
     let Notice = document.querySelector('.notice')
- if(data1 + data2 < data3  ){
-    Notice.textContent = "You Have alot of task in pending ! Plaese check it";
-    Notice.setAttribute('style','color:blue');
+ if((data1 + data2) + data3 != data4){
+    Notice.textContent = "There is Error in System";
+    Notice.setAttribute('style','color:Red');
+
   }
   else if((data1 > data2) && (data1 > data3)  ){
     Notice.textContent = "You Have alot of task in progress ! Plaese complete it";
     Notice.setAttribute('style','color:blue');
   }
 
-  else if((data1 + data2) + data3 != data4){
-    Notice.textContent = "There is Error in System";
-    Notice.setAttribute('style','color:Red');
-
+  else if(data1 + data2 < data3  ){
+    Notice.textContent = "You Have alot of task in pending ! Plaese check it";
+    Notice.setAttribute('style','color:blue');
   }
 
   else if((data3 == 0 && data2 == 0 && data1 == 0)  ){
     Notice.textContent = "You have no task to do";
-    Notice.setAttribute('style','color:red');
+    Notice.setAttribute('style','color:blue');
   }
   else if((data1 === 0) && (data3 === 0 ) ){
     Notice.textContent = "Congratulation, You have completed all task";
@@ -642,7 +642,7 @@ h5,p{
   }
   else{
     Notice.textContent = "All updated, Keep going";
-    Notice.setAttribute('style','color:Red');
+    Notice.setAttribute('style','color:blue');
   }
 }
 
