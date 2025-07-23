@@ -44,9 +44,8 @@
         .container ul{
             max-height:500px;
             overflow-y:auto;
-            display: flex;
-            flex-direction: column-reverse;
-            scroll-behavior: smooth;
+            display:flex;
+            flex-direction:column-reverse;
         }
         .grid ul{
             max-height:410px;
@@ -335,10 +334,7 @@ h5,p{
        const input = document.getElementById('imageInput');
   const preview = document.getElementById('preview');
   // const inputSrc =preview.src;
-     function scrollChatToBottom() {
-    const chatBox = document.querySelectorAll('.container ul');
-    chatBox.forEach((cb) => {cb.scrollTop = cb.scrollHeight});
-  }
+   
 
 
     function updateStorage() {
@@ -415,8 +411,6 @@ h5,p{
                 updateStorage();
                     renderChart();
             });
-            scrollChatToBottom();
-        
         });
 
         document.querySelectorAll('.move2').forEach((mc) => {
@@ -434,7 +428,6 @@ h5,p{
                 updateStorage();
                     renderChart();
             });
-            scrollChatToBottom();
         });
     }
         Link.addEventListener("click",function(){
@@ -496,7 +489,6 @@ h5,p{
                 });
             });
         });
-        scrollChatToBottom();
     });
 
     // render tasks on page load
