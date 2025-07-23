@@ -332,10 +332,7 @@ h5,p{
        const input = document.getElementById('imageInput');
   const preview = document.getElementById('preview');
   // const inputSrc =preview.src;
-     function scrollChatToBottom() {
-    const chatBox = document.querySelectorAll('.container ul');
-    chatBox.forEach((cb) => {cb.scrollTop = cb.scrollHeight;});
-  }
+   
 
 
     function updateStorage() {
@@ -412,8 +409,6 @@ h5,p{
                 updateStorage();
                     renderChart();
             });
-            scrollChatToBottom();
-        
         });
 
         document.querySelectorAll('.move2').forEach((mc) => {
@@ -431,7 +426,6 @@ h5,p{
                 updateStorage();
                     renderChart();
             });
-            scrollChatToBottom();
         });
     }
         Link.addEventListener("click",function(){
@@ -493,7 +487,6 @@ h5,p{
                 });
             });
         });
-        scrollChatToBottom();
     });
 
     // render tasks on page load
