@@ -44,7 +44,8 @@
         .container ul{
             max-height:500px;
             overflow-y:auto;
-
+            display: flex;
+            flex-direction: column-reverse;
             scroll-behavior: smooth;
         }
         .grid ul{
@@ -336,7 +337,7 @@ h5,p{
   // const inputSrc =preview.src;
      function scrollChatToBottom() {
     const chatBox = document.querySelectorAll('.container ul');
-    chatBox.forEach((cb) => {cb.scrollTop = 0});
+    chatBox.forEach((cb) => {cb.scrollTop = cb.scrollHeight});
   }
 
 
